@@ -1,0 +1,2 @@
+# use 'source'
+export CLASSPATH=".:$HOME/cs/algs4/third_party/*"
