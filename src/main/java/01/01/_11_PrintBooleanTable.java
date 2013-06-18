@@ -1,4 +1,4 @@
-public class _1_1_11_PrintBooleanTable {
+public class _11_PrintBooleanTable {
 
   public static void main(String[] args) {
     // boolean[][] table = new boolean[10][10];

@@ -1,4 +1,4 @@
-public class _1_1_WhatDoTheyPrint {
+public class WhatDoTheyPrint {
 
   static void _1_1_6()
   {

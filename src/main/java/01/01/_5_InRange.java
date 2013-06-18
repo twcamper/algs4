@@ -1,4 +1,4 @@
-public class _1_1_5_InRange {
+public class _5_InRange {
 
   static boolean inRange(double n) {
     if (n > 0.0 && n < 1.0)
