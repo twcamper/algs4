@@ -1,4 +1,4 @@
-public class _9_ToBinaryString {
+public class _09_ToBinaryString {
 
   private static String toBinaryString(Integer N)
   {

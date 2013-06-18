@@ -1,4 +1,4 @@
-public class _3_Equal {
+public class _03_Equal {
 
   public static void main(String[] args)
   {
