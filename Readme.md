@@ -6,7 +6,5 @@ This is my working repo of problem solutions for Sedgewick and Wayne's text [Alg
 ## Dependencies
 
 1. Java 5 or later
-2. Apache Buildr
-3. Ruby
-4. The text authors' jars, <code>stdlib.jar</code> and
-   <code>algs4.jar</code>
+3. Rake and Ruby
+4. The text authors' jars, <code>stdlib.jar</code> and <code>algs4.jar</code>
