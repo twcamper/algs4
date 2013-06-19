@@ -1,4 +1,3 @@
-import java.util.*;
 public class _15_Histogram {
   
   public static int[] histogram(int[] a, int M)
@@ -33,7 +32,7 @@ public class _15_Histogram {
       StdOut.println();
 
       // java -ea
-      assert (sum == values.length) : "Histogram fails to sum correctly: expected " + values.length;
+      assert (sum == values.length) : String.format("Histogram fails to sum correctly: expected %d got %d", values.length, sum);
     }
   }
 }
