@@ -28,7 +28,6 @@ public class _01_ClosestPair
 
     for (int a = 0; a < points.length - 1; a++)
       for (int b = a + 1; b < points.length; b++) {
-        printPair(points[a], points[b]);
         if ((d = points[a].distanceTo(points[b])) < closest) {
           closest = d;
           pair[0] = points[a];
@@ -38,16 +37,28 @@ public class _01_ClosestPair
 
     return pair;
   }
+  private static void displayPoints(Point2D[] allPoints, Point2D[] closestPair)
+  {
+    StdDraw.setPenRadius(.005);
+    for (int i = 0; i < allPoints.length; i++)
+      allPoints[i].draw();
+
+    // Draw over the closest points
+    StdDraw.setPenRadius(.009);
+    StdDraw.setPenColor(StdDraw.BLUE);
+    closestPair[0].draw();
+    closestPair[1].draw();
+  }
 
   public static void main(String[] args)
   {
     if (args.length != 1)
       usageError();
 
-    int N = Integer.parseInt(args[0]);
-    Point2D[] closest = computeClosestPair(generatePoints(N));
+    Point2D[] points  = generatePoints(Integer.parseInt(args[0]));
+    Point2D[] closest = computeClosestPair(points);
 
-    StdOut.println("--------------------------------------------------");
+    displayPoints(points, closest);
     printPair(closest[0], closest[1]);
 
   }
