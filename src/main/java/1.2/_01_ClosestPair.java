@@ -8,6 +8,8 @@ public class _01_ClosestPair
   {
     Point2D[] points = new Point2D[n];
 
+    StdRandom.setSeed(System.currentTimeMillis());
+
     for (int i = 0; i < n; i++)
       points[i] = new Point2D(StdRandom.random(), StdRandom.random());
     return points;
@@ -37,7 +39,7 @@ public class _01_ClosestPair
     if (args.length == 1) {
       int N = Integer.parseInt(args[0]);
       Point2D[] closest = computeClosestPair(generatePoints(N));
-      assert closest.length == 2 : "Incorrect closest pair array length";
+
       StdOut.println("--------------------------------------------------");
       printPair(closest[0], closest[1]);
     } else
