@@ -1,5 +1,10 @@
 public class _01_ClosestPair
 {
+  private static void usageError()
+  {
+     System.err.println("Usage: <number of points to generate>");
+     System.exit(1);
+  }
   private static void printPair(Point2D a, Point2D b)
   {
     StdOut.printf("%s to %s\nDistance: %f\n", a, b, a.distanceTo(b));
@@ -34,16 +39,16 @@ public class _01_ClosestPair
     return pair;
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args)
+  {
+    if (args.length != 1)
+      usageError();
 
-    if (args.length == 1) {
-      int N = Integer.parseInt(args[0]);
-      Point2D[] closest = computeClosestPair(generatePoints(N));
+    int N = Integer.parseInt(args[0]);
+    Point2D[] closest = computeClosestPair(generatePoints(N));
 
-      StdOut.println("--------------------------------------------------");
-      printPair(closest[0], closest[1]);
-    } else
-      System.err.println("Usage: <number of points to generate>");
+    StdOut.println("--------------------------------------------------");
+    printPair(closest[0], closest[1]);
 
   }
 }
