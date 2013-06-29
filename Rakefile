@@ -4,49 +4,79 @@ require 'popen4'
 require 'test/unit/assertions'
 
 module Algs4
-  module Build
-    Changed = {}
-  end
-end
-
-SRC_DIR = File.expand_path "src/main/java"
-BIN_DIR = File.expand_path "target/classes"
-directory BIN_DIR
-
-# file lists
-SRC   = FileList["#{SRC_DIR}/**/*.java"]
-
-# clobber and clean lists
-CLEAN.include(FileList["#{BIN_DIR}/**/*.class"])
-
-desc "find changed src files and group by directory"
-task :find_changed do
-  SRC.each do |src_file|
-    out_file = src_file.sub(SRC_DIR, BIN_DIR).sub(/\.java$/,".class")
-    if !File.exist?(out_file) || File.mtime(src_file) > File.mtime(out_file)
-      out_dir = File.dirname(out_file)
-      if Algs4::Build::Changed[out_dir]
-        Algs4::Build::Changed[out_dir] << src_file
-      else
-        Algs4::Build::Changed[out_dir] = [src_file]
+  BIN_DIR = File.expand_path "target/classes"
+  def find_changed
+    self::FILES.each do |src_file|
+      out_file = src_file.sub(self::DIR, BIN_DIR).sub(/\.java$/,".class")
+      if !File.exist?(out_file) || File.mtime(src_file) > File.mtime(out_file)
+        out_dir = File.dirname(out_file)
+        if self::Changed[out_dir]
+          self::Changed[out_dir] << src_file
+        else
+          self::Changed[out_dir] = [src_file]
+        end
       end
     end
   end
-end
 
-task :all do
-  Algs4::Build::Changed.each do |out_dir, src_list|
-    mkdir_p out_dir, :verbose => false
-
-    # Seems sufficient to have the classpath set in the env
-    # puts cmd = "time javac -cp $CLASSPATH -d #{out_dir} #{src_list.join(' ')}"
-    #
-    puts cmd = "time javac -d #{out_dir} #{src_list.join(' ')}"
+  def run(cmd)
+    puts cmd
     POpen4::popen4(cmd) do |stdout, stderr|
       puts stdout.read.strip
       puts stderr.read.strip
     end
   end
+
+  module Src
+    extend ::Algs4  # include find_changed(), run() as singletons
+    DIR   = File.expand_path "src"
+    FILES = Dir["#{DIR}/*/*.java"]  # NOT recursive
+    Changed = {}
+
+    def self.build
+      Changed.each do |out_dir, src_list|
+        FileUtils.mkdir_p out_dir, :verbose => false
+        puts "Compile:"
+        run "time javac -d #{out_dir} #{src_list.join(' ')}"
+
+        jar_file   = "#{File.dirname(src_list.first)}.jar"
+        class_list = Dir["#{out_dir}/*.class"]
+        puts "Package:"
+        run "jar cf #{jar_file} #{class_list.join(' ')}"
+      end
+    end
+    module Main
+      module Java
+        extend ::Algs4
+        DIR   = File.expand_path "src/main/java"
+        FILES = Dir["#{DIR}/**/*.java"]
+        Changed = {}
+
+        def self.build
+          Changed.each do |out_dir, src_list|
+            FileUtils.mkdir_p out_dir, :verbose => false
+            run "time javac -d #{out_dir} #{src_list.join(' ')}"
+          end
+        end
+      end
+    end
+  end
+end
+
+directory Algs4::BIN_DIR
+
+# clobber and clean lists
+CLEAN.include(FileList["#{Algs4::BIN_DIR}/**/*.class"])
+
+desc "find changed src files and group by directory"
+task :find_changed do
+  Algs4::Src::Main::Java.find_changed
+  Algs4::Src.find_changed
+end
+
+task :all do
+  Algs4::Src::Main::Java.build
+  Algs4::Src.build
 end
 
 task :all => [:check_classpath, :find_changed]
