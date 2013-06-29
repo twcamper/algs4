@@ -1,2 +1,2 @@
 # use 'source'
-export CLASSPATH=".:$HOME/cs/algs4/third_party/*:$HOME/cs/algs4/src/*"
+export CLASSPATH=".:$HOME/cs/algs4/third_party/*:$HOME/cs/algs4/target/classes/*"

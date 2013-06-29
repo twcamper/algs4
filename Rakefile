@@ -39,12 +39,11 @@ module Algs4
         puts "Compile:"
         run "time javac -d #{out_dir} #{src_list.join(' ')}"
 
-        jar_file   = "#{File.dirname(src_list.first)}.jar"
-        class_list = Dir["#{out_dir}/*.class"]
         puts "Package:"
-        run "jar cf #{jar_file} #{class_list.join(' ')}"
+        run "cd #{out_dir} && jar cf #{out_dir}.jar *.class"
       end
     end
+
     module Main
       module Java
         extend ::Algs4
@@ -63,23 +62,23 @@ module Algs4
   end
 end
 
-directory Algs4::BIN_DIR
-
 # clobber and clean lists
-CLEAN.include(FileList["#{Algs4::BIN_DIR}/**/*.class"])
+CLEAN.include(FileList["#{Algs4::BIN_DIR}/**/*.{jar,class}"])
 
-desc "find changed src files and group by directory"
-task :find_changed do
-  Algs4::Src::Main::Java.find_changed
+desc "local source needed in jars on the classpath"
+task :jars do
   Algs4::Src.find_changed
-end
-
-task :all do
-  Algs4::Src::Main::Java.build
   Algs4::Src.build
 end
 
-task :all => [:check_classpath, :find_changed]
+desc "source for book exercises"
+task :build_source => :jars do
+  Algs4::Src::Main::Java.find_changed
+  Algs4::Src::Main::Java.build
+end
+
+desc "build jars and exercise source"
+task :all => [:check_classpath, :build_source]
 task :default => :all
 
 desc "warn and exit if no classpath"
