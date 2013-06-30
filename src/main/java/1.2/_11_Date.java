@@ -1,3 +1,4 @@
+import util.*;
 public class _11_Date
 {
   public static void main(String[] args)
@@ -8,7 +9,7 @@ public class _11_Date
     int mm   = Integer.parseInt(args[0]);
     int dd   = Integer.parseInt(args[1]);
     int yyyy = Integer.parseInt(args[2]);
-    SmartDate d = new SmartDate(mm, dd, yyyy);
+    util.Date d = new util.Date(mm, dd, yyyy);
 
     StdOut.println(d);
   }

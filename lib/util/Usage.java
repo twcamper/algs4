@@ -1,3 +1,4 @@
+package util;
 public class Usage
 {
   public static void error(String cliUsage)

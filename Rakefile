@@ -4,10 +4,11 @@ require 'popen4'
 require 'test/unit/assertions'
 
 module Algs4
-  BIN_DIR = File.expand_path "target/classes"
+  BIN_ROOT   = File.expand_path "target/classes"
+
   def find_changed
     self::FILES.each do |src_file|
-      out_file = src_file.sub(self::DIR, BIN_DIR).sub(/\.java$/,".class")
+      out_file = src_file.sub(self::SRC, self::BIN).sub(/\.java$/,".class")
       if !File.exist?(out_file) || File.mtime(src_file) > File.mtime(out_file)
         out_dir = File.dirname(out_file)
         if self::Changed[out_dir]
@@ -27,28 +28,41 @@ module Algs4
     end
   end
 
-  module Src
+  module Lib
+    extend Test::Unit::Assertions
     extend ::Algs4  # include find_changed(), run() as singletons
-    DIR   = File.expand_path "src"
-    FILES = Dir["#{DIR}/*/*.java"]  # NOT recursive
+    SRC   = File.expand_path "lib"
+    BIN   = "#{Algs4::BIN_ROOT}/lib"
+    FILES = Dir["#{SRC}/**/*.java"]
     Changed = {}
 
     def self.build
-      Changed.each do |out_dir, src_list|
-        FileUtils.mkdir_p out_dir, :verbose => false
+      unless (Changed.empty?)
+        src_list = Changed.values.flatten
+        src_list.each do |f|
+          assert_match(File.read(f), /^\s*package/)
+        end
+        FileUtils.mkdir_p BIN, :verbose => false
         puts "Compile:"
-        run "time javac -d #{out_dir} #{src_list.join(' ')}"
-
-        puts "Package:"
-        run "cd #{out_dir} && jar cf #{out_dir}.jar *.class"
+        run "time javac -d #{BIN} #{src_list.join(' ')}"
       end
     end
 
+    def self.package
+      Dir.chdir(BIN)
+      class_file_list = Dir["**/*.class"]
+      puts "Package:"
+      run "jar cf #{BIN}.jar #{class_file_list.join(' ')}"
+    end
+  end
+
+  module Src
     module Main
       module Java
         extend ::Algs4
-        DIR   = File.expand_path "src/main/java"
-        FILES = Dir["#{DIR}/**/*.java"]
+        SRC   = File.expand_path "src/main/java"
+        BIN   = Algs4::BIN_ROOT
+        FILES = Dir["#{SRC}/**/*.java"]
         Changed = {}
 
         def self.build
@@ -62,23 +76,29 @@ module Algs4
   end
 end
 
-# clobber and clean lists
-CLEAN.include(FileList["#{Algs4::BIN_DIR}/**/*.{jar,class}"])
+# clobber and clean lists for Rake default tasks
+CLOBBER.include(FileList["#{Algs4::BIN_ROOT}/*"])
+CLEAN.include(FileList["#{Algs4::BIN_ROOT}/**/*.{jar,class}"])
 
 desc "local source needed in jars on the classpath"
-task :jars do
-  Algs4::Src.find_changed
-  Algs4::Src.build
+task :lib do
+  Algs4::Lib.find_changed
+  Algs4::Lib.build
+end
+
+desc "archive lib files for use on classpath"
+task :package => :lib do
+  Algs4::Lib.package
 end
 
 desc "source for book exercises"
-task :build_source => :jars do
+task :src do
   Algs4::Src::Main::Java.find_changed
   Algs4::Src::Main::Java.build
 end
 
 desc "build jars and exercise source"
-task :all => [:check_classpath, :build_source]
+task :all => [:check_classpath, :package, :src]
 task :default => :all
 
 desc "warn and exit if no classpath"

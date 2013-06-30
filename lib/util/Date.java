@@ -1,10 +1,11 @@
-public class SmartDate
+package util;
+public class Date
 {
   private final int month;
   private final int day;
   private final int year;
 
-  public SmartDate(int mm, int dd, int yyyy)
+  public Date(int mm, int dd, int yyyy)
   {
     if (dateIsValid(mm, dd, yyyy)) {
       month = mm; day = dd; year = yyyy;
