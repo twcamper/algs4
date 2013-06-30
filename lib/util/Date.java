@@ -87,4 +87,18 @@ public class Date
 
     return true;
   }
+
+  public boolean equals(Object other)
+  {
+    if (this == other) return true;
+    if (other == null) return false;
+    if (this.getClass() != other.getClass()) return false;
+
+    Date that = (Date) other;
+    if (this.day != that.day)                return false;
+    if (this.month != that.month)            return false;
+    if (this.year != that.year)              return false;
+
+    return true;
+  }
 }
