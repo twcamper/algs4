@@ -22,11 +22,12 @@ module Algs4
 
   def run(cmd)
     puts cmd = "time " + cmd
-    POpen4::popen4(cmd) do |stdout, stderr|
+    status = POpen4::popen4(cmd) do |stdout, stderr|
       puts stdout.read.strip
       # color the console output of stderr
       puts "\033[0;36m" + stderr.read.strip + "\033[0m"
     end
+    raise "Command Failed" unless status.exitstatus == 0
   end
 
   module Lib
@@ -38,7 +39,7 @@ module Algs4
     Changed = {}
 
     def self.build
-      unless (Changed.empty?)
+      unless Changed.empty?
         src_list = Changed.values.flatten
         src_list.each do |f|
           package_name = File.dirname(f).sub("#{SRC}/", "")
@@ -54,10 +55,8 @@ module Algs4
       unless Changed.empty?
         Dir.chdir(BIN)
         class_file_list = Dir["**/*.class"]
-        unless class_file_list.empty?
-          puts "Package:"
-          run "jar cf #{BIN}.jar #{class_file_list.join(' ')}"
-        end
+        puts "Package:"
+        run "jar cf #{BIN}.jar #{class_file_list.join(' ')}"
       end
     end
   end
