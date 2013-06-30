@@ -11,6 +11,6 @@ public class _11_Date
     int yyyy = Integer.parseInt(args[2]);
     util.Date d = new util.Date(mm, dd, yyyy);
 
-    StdOut.println(d);
+    StdOut.printf("%s %s\n", d.dayOfTheWeek(), d);
   }
 }
