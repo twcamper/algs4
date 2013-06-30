@@ -41,7 +41,8 @@ module Algs4
       unless (Changed.empty?)
         src_list = Changed.values.flatten
         src_list.each do |f|
-          assert_match(File.read(f), /^\s*package/)
+          package_name = File.dirname(f).sub("#{SRC}/", "")
+          assert_match(File.read(f), /^\s*package\s+#{package_name};/)
         end
         FileUtils.mkdir_p BIN, :verbose => false
         puts "Compile:"
