@@ -21,10 +21,11 @@ module Algs4
   end
 
   def run(cmd)
-    puts cmd
+    puts cmd = "time " + cmd
     POpen4::popen4(cmd) do |stdout, stderr|
       puts stdout.read.strip
-      puts stderr.read.strip
+      # color the console output of stderr
+      puts "\033[0;36m" + stderr.read.strip + "\033[0m"
     end
   end
 
@@ -44,15 +45,19 @@ module Algs4
         end
         FileUtils.mkdir_p BIN, :verbose => false
         puts "Compile:"
-        run "time javac -d #{BIN} #{src_list.join(' ')}"
+        run "javac -d #{BIN} #{src_list.join(' ')}"
       end
     end
 
     def self.package
-      Dir.chdir(BIN)
-      class_file_list = Dir["**/*.class"]
-      puts "Package:"
-      run "jar cf #{BIN}.jar #{class_file_list.join(' ')}"
+      unless Changed.empty?
+        Dir.chdir(BIN)
+        class_file_list = Dir["**/*.class"]
+        unless class_file_list.empty?
+          puts "Package:"
+          run "jar cf #{BIN}.jar #{class_file_list.join(' ')}"
+        end
+      end
     end
   end
 
@@ -68,7 +73,7 @@ module Algs4
         def self.build
           Changed.each do |out_dir, src_list|
             FileUtils.mkdir_p out_dir, :verbose => false
-            run "time javac -d #{out_dir} #{src_list.join(' ')}"
+            run "javac -d #{out_dir} #{src_list.join(' ')}"
           end
         end
       end
