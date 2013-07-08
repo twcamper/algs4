@@ -1,24 +1,24 @@
 public class _04_Parentheses
 {
-  private static boolean isBalanced()
+  private static boolean isBalanced(String expression)
   {
     Stack<Character> s = new Stack<Character>();
     char ch; 
-    while (!StdIn.isEmpty()) {
-      switch((ch = StdIn.readChar())) {
+    for (int i = 0; i < expression.length(); i++) {
+      switch((ch = expression.charAt(i))) {
         case '[':
         case'{':
         case '(':
           s.push(ch);
           break;
         case ']':
-          if (s.pop() != '[') return false;
+          if (s.isEmpty() || s.pop() != '[') return false;
           break;
         case '}':
-          if (s.pop() != '{') return false;
+          if (s.isEmpty() || s.pop() != '{') return false;
           break;
         case ')':
-          if (s.pop() != '(') return false;
+          if (s.isEmpty() || s.pop() != '(') return false;
           break;
         }
       }
@@ -27,6 +27,6 @@ public class _04_Parentheses
 
   public static void main(String[] args)
   {
-    StdOut.println("\nBalanced? " + isBalanced());
+    StdOut.println("\nBalanced? " + isBalanced(StdIn.readString()));
   }
 }
