@@ -4,28 +4,9 @@ import java.util.Stack;
 
 public class _09_InsertLeftParens
 {
-  private static Stack<String> reverseInput(String s)
-  {
-    StringTokenizer tokenizer = new StringTokenizer(s, " )+-/*", true);
-    Stack<String> input = new Stack<String>();
-
-    String token = "";
-    while (tokenizer.hasMoreTokens()) {
-      if (!(token = tokenizer.nextToken()).equals(" "))
-        input.push(token);
-    }
-
-    return input;
-  }
-  private static boolean isOperator(String s)
-  {
-    if (s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/"))
-      return true;
-    return false;
-  }
   private static String insertLeftParens(String incompleteExpression)
   {
-    Stack<String> input     = reverseInput(incompleteExpression);
+    Stack<String> input     = Expressions.reverseInput(incompleteExpression);
     Stack<String> parens    = new Stack<String>();
     Stack<String> operators = new Stack<String>();
     String output = "";
@@ -40,7 +21,7 @@ public class _09_InsertLeftParens
       if (token.equals(")")) {
         parens.push(token);
         rightExpressionWritten = false;
-      } else if (isOperator(token)) {
+      } else if (Expressions.isOperator(token)) {
         operators.push(token);
       } else {  // atomic expression (integer)
         if (rightExpressionWritten) {
