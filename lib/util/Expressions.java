@@ -34,15 +34,20 @@ public class Expressions
   {
     if (left.equals(")"))
       throw new IllegalArgumentException(String.format("Undefined comparison: left '%s', right '%s'\n", left, right));
+    // beginning of sub-expression
+    if (left.equals("("))
+      return false;
+    // both operators are the same
     if (left.equals(right))
       return true;
+    // arithmetic operator precedence
     if ((left.equals("*") || left.equals("/")) && (right.equals("+") || right.equals("-")))
       return true;
-    if (!left.equals("(") && right.equals("("))
+    // end of sub-expression, which has precedence over anything that will follow
+    if (!left.equals("(") && right.equals(")"))
       return true;
 
     // False cases:
-    //     left == (
     //     right == (
     //     left == + or - && right == * or /
     return false;
