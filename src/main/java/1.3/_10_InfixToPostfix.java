@@ -15,7 +15,7 @@ public class _10_InfixToPostfix
       if (Expressions.isOperator(token) || Expressions.isParen(token)) {
         // write out operators if they have precedence over the next one to the right
         while (!operators.empty() && Expressions.hasPrecedence(operators.peek(), token))
-          postfix += operators.pop();
+          postfix += operators.pop() + " ";
 
         // have we finished with a sub-expression?
         if (!operators.empty() && operators.peek().equals("("))
@@ -25,7 +25,7 @@ public class _10_InfixToPostfix
         if (!token.equals(")"))
           operators.push(token);
       } else
-        postfix += token; // operand
+        postfix += token + " "; // operand
 
     }
 
