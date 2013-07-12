@@ -109,10 +109,6 @@ task :default => :all
 desc "warn and exit if no classpath"
 task :check_classpath do
   include Test::Unit::Assertions
-  script =  "#{ENV['HOME']}/cs/algs4/scripts/set_classpath"
-  File.read(script)[/CLASSPATH=".*\$HOME([^\"]+)/]
-  cp = $1
 
-  assert(cp && !cp.empty?, "bad read of script: #{script}")
-  assert_match(ENV['CLASSPATH'], /#{Regexp.escape(cp)}/,  "class path not set correctly")
+  assert_not_nil(ENV['CLASSPATH'], "no classpath set")
 end
