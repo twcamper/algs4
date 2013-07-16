@@ -48,7 +48,7 @@ public class LinkedListExercises<Item>
   private boolean find(Item i)
   {
     for (Node n = first; n != null; n = n.next)
-      if (n.item == i)
+      if (n.item.equals(i))
         return true;
     return false;
   }
