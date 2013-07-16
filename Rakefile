@@ -18,28 +18,18 @@ task :lib do
   Algs4::Src::Main::Java::Lib.build
 end
 
-desc "archive lib files for use on classpath"
-task :package => :lib do
-  Algs4::Src::Main::Java::Lib.package
-end
-
 desc "source for book exercises"
-task :src do
+task :src => :lib do
   Algs4::Src::Main::Java.find_changed
   Algs4::Src::Main::Java.build
 end
 
 desc "build jars and exercise source"
-task :all => [:check_classpath, :package, :src]
+task :all => [:check_classpath, :lib, :src]
 task :default => :all
 
-desc "make jars of classes in named packages for testing"
-task :package_testable => :all do
-  Algs4::Src::Test::Java.package_testable
-end
-
 desc "compile junit tests"
-task :build_tests => :package_testable do
+task :build_tests => :all do
   Algs4::Src::Test::Java.find_changed
   Algs4::Src::Test::Java.build
 end
