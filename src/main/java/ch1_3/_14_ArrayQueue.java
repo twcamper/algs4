@@ -40,6 +40,13 @@ public class _14_ArrayQueue<Item>
   public Item front()      { return q[frontPosition]; }
   public Item rear()       { return q[frontPosition + depth - 1]; }
   public boolean isEmpty() { return depth == 0; }
+  public String toString()
+  {
+    String s = "";
+    for (int i = frontPosition; i < emptyPosition; i++)
+      s += q[i] + " ";
+    return s;
+  }
 
   private void resize(int max)
   {
