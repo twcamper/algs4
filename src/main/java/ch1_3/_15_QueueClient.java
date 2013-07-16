@@ -1,20 +1,19 @@
 import util.*;
-import ch1_3.*;
 public class _15_QueueClient
 {
 
   private static String fromLast(int n)
   {
-    _14_ArrayQueue<String> q = new _14_ArrayQueue<String>(50);
+    Queue<String> q = new Queue<String>();
 
     while (!StdIn.isEmpty())
       q.enqueue(StdIn.readString());
 
-    if (n > q.depth())
+    if (n > q.size())
       throw new IllegalArgumentException("number of input strings less than arg <n>");
 
     while (!q.isEmpty()) {
-      if (q.depth() == n)
+      if (q.size() == n)
         return q.dequeue();
       q.dequeue();
     }
