@@ -11,13 +11,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class LinkedListTest {
+public class ListContainerTest {
 
-  private LinkedList<Integer> l;
+  private ListContainer<Integer> l;
   @Before
   public void setUp()
   {
-    l = new LinkedList<Integer>();
+    l = new ListContainer<Integer>();
   }
   @Test
   public void newListIsEmpty()
@@ -27,7 +27,7 @@ public class LinkedListTest {
   @Test
   public void insertOne()
   {
-    LinkedList<String> l = new LinkedList<String>();
+    ListContainer<String> l = new ListContainer<String>();
     l.insert("Noo");
     assertThat(l.first(), equalTo("Noo"));
   }
@@ -76,7 +76,7 @@ public class LinkedListTest {
   }
 
   @Test
-  public void _20_deleteFirst()
+  public void _20_deleteFirstIndex()
   {
      l.insert(100);
      l.insert(200);
@@ -85,7 +85,7 @@ public class LinkedListTest {
   }
 
   @Test
-  public void _20_deleteLast()
+  public void _20_deleteLastIndex()
   {
      l.insert(100);
      l.insert(150);
@@ -96,7 +96,7 @@ public class LinkedListTest {
   }
 
   @Test
-  public void _20_deleteMiddle()
+  public void _20_deleteMiddleIndex()
   {
      l.insert(100);
      l.insert(150);
@@ -167,5 +167,47 @@ public class LinkedListTest {
     l.insert(28);
 
     assertEquals(l.find(26), false);
+  }
+
+  @Test
+  public void ItemAtFindsFirstItem()
+  {
+    l.insert(99);
+    l.insert(100);
+    l.insert(101);
+
+    assertThat(l.itemAt(0), equalTo(101));
+  }
+
+  @Test
+  public void itemAtFindsAMiddleItem()
+  {
+    l.insert(99);
+    l.insert(100);
+    l.insert(120);
+    l.insert(130);
+    l.insert(101);
+
+    assertThat(l.itemAt(2), equalTo(120));
+  }
+
+  @Test
+  public void itemAtFindsLastItem()
+  {
+    l.insert(99);
+    l.insert(100);
+    l.insert(101);
+
+    assertThat(l.itemAt(2), equalTo(99));
+  }
+
+  @Test
+  public void itemAtReturnsNullForIndexOutOfRange()
+  {
+    l.insert(99);
+    l.insert(100);
+    l.insert(101);
+
+    assertThat(l.itemAt(3), equalTo(null));
   }
 }

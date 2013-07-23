@@ -1,5 +1,8 @@
 package ch1_3;
-public class LinkedList<Item>
+/*
+ * An object that has a linked list and operates on it.
+ */
+public class ListContainer<Item>
 {
   private class Node
   {
@@ -22,9 +25,11 @@ public class LinkedList<Item>
   {
     Node n = first;
     int i = 0;
-    while (n != null && i < index)
+    while (n != null && i++ < index)
       n = n.next;
 
+    if (n == null)
+      return null;
     return n.item;
   }
   public void insert(Item i)
