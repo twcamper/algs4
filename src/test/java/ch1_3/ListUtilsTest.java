@@ -58,7 +58,7 @@ public class ListUtilsTest {
   }
 
   @Test
-  public void _24_removeAfterMiddle()
+  public void _24_removeAfterRemovesLast()
   {
     Node<Integer> head = new Node<Integer>();
     Node<Integer> middle = new Node<Integer>();
@@ -75,6 +75,26 @@ public class ListUtilsTest {
   }
 
   @Test
+  public void _24_removeAfterMiddle()
+  {
+    Node<Integer> head = new Node<>();
+    Node<Integer> middle = new Node<>();
+    Node<Integer> third = new Node<>();
+    Node<Integer> tail = new Node<>();
+
+    head.item = 10;
+    middle.item = 20;
+    third.item = 25;
+    tail.item = 30;
+    head.next = middle;
+    middle.next = third;
+    third.next = tail;
+
+    ListUtils.removeAfter(middle);
+    assertThat(middle.next, equalTo(tail));
+  }
+
+  @Test
   public void _24_removeAfterLast()
   {
     Node<Integer> head = new Node<Integer>();
@@ -87,4 +107,209 @@ public class ListUtilsTest {
     ListUtils.removeAfter(tail);
     assertEquals(2, ListUtils.size(head));
   }
+
+  @Test
+  public void _24_removeAfterNullDoesNothing()
+  {
+    ListUtils.removeAfter(null);
+  }
+
+  @Test
+  public void nodeForNullList()
+  {
+    Node<String> n = ListUtils.nodeFor(null, "");
+    assertEquals(null, n);
+  }
+
+  @Test
+  public void nodeForNoItemFound()
+  {
+    Node<String> n = ListUtils.nodeFor(l, "nothing here");
+    assertEquals(null, n);
+  }
+
+  @Test
+  public void nodeForFirstItem()
+  {
+    Node<String> n = ListUtils.nodeFor(l, "head");
+    assertThat(n.item, equalTo("head"));
+  }
+
+  @Test
+  public void nodeForLastItem()
+  {
+    Node<String> n = ListUtils.nodeFor(l, "tail");
+    assertThat(n.item, equalTo("tail"));
+  }
+
+  @Test
+  public void nodeForMiddleItem()
+  {
+    Node<String> n = ListUtils.nodeFor(l, "third");
+    assertThat(n.item, equalTo("third"));
+  }
+
+  @Test
+  public void nodeAtNullList()
+  {
+    Node<String> n = ListUtils.nodeAt(null, 0);
+    assertEquals(null, n);
+  }
+
+  @Test
+  public void nodeAtFirstIndex()
+  {
+    Node<String> n = ListUtils.nodeAt(l, 0);
+    assertThat(n.item, equalTo("head"));
+  }
+
+  @Test
+  public void nodeAtLastIndex()
+  {
+    Node<String> n = ListUtils.nodeAt(l, 3);
+    assertThat(n.item, equalTo("tail"));
+  }
+
+  @Test
+  public void nodeAtIndexOutOfRange()
+  {
+    Node<String> n = ListUtils.nodeAt(l, 4);
+    assertEquals(null, n);
+  }
+
+  @Test
+  public void nodeAtMiddleIndex()
+  {
+    Node<String> n = ListUtils.nodeAt(l, 2);
+    assertThat(n.item, equalTo("third"));
+  }
+
+  @Test
+  public void itemAtNullList()
+  {
+    assertEquals(null, ListUtils.itemAt(null, 0));
+  }
+
+  @Test
+  public void itemAtFirstIndex()
+  {
+    assertThat(ListUtils.itemAt(l, 0), equalTo("head"));
+  }
+
+  @Test
+  public void itemAtLastIndex()
+  {
+    assertThat(ListUtils.itemAt(l, 3), equalTo("tail"));
+  }
+
+  @Test
+  public void itemAtIndexOutOfRange()
+  {
+    assertEquals(null, ListUtils.itemAt(l, 4));
+  }
+
+  @Test
+  public void itemAtMiddleIndex()
+  {
+    assertThat(ListUtils.itemAt(l, 2), equalTo("third"));
+  }
+
+  @Test
+  public void lastItemOfNullList()
+  {
+    assertEquals(null, ListUtils.lastItem(null));
+  }
+
+  @Test
+  public void lastItemOfSingleItemList()
+  {
+    Node<Double> n = new Node<>();
+    n.item = 25.5;
+    assertThat(ListUtils.lastItem(n), equalTo(25.5));
+  }
+
+  @Test
+  public void lastItemOfMultiItemList()
+  {
+    assertThat(ListUtils.lastItem(l), equalTo("tail"));
+  }
+
+
+  @Test
+  public void lastNodeOfNullList()
+  {
+    assertEquals(null, ListUtils.lastNode(null));
+  }
+
+  @Test
+  public void lastNodeOfSingleItemList()
+  {
+    Node<Double> n = new Node<>();
+    n.item = 25.5;
+    assertThat(ListUtils.lastNode(n).item, equalTo(25.5));
+  }
+
+  @Test
+  public void lastNodeOfMultiItemList()
+  {
+    assertThat(ListUtils.lastNode(l).item, equalTo("tail"));
+  }
+
+  @Test
+  public void _25_insertAfterNullList()
+  {
+    Node<Integer> n = new Node<>();
+    ListUtils.insertAfter(null, n);
+  }
+
+  @Test
+  public void _25_insertAfterWhenNewNodeIsNull()
+  {
+    ListUtils.insertAfter(l, null);
+    assertEquals(4, ListUtils.size(l));
+  }
+
+  @Test
+  public void _25_insertAfterSingleItemList()
+  {
+    Node<Integer> head = new Node<>();
+    Node<Integer> n = new Node<>();
+    head.item = 42;
+    n.item = 43;
+
+    ListUtils.insertAfter(head, n);
+    assertEquals(2, ListUtils.size(head));
+    assertThat(ListUtils.lastItem(head), equalTo(43));
+  }
+
+  @Test
+  public void _25_insertAfterFirstOfMultiItemList()
+  {
+    Node<String> n = new Node<>();
+    n.item = "I'm the new guy!";
+    ListUtils.insertAfter(l, n);
+    assertEquals(5, ListUtils.size(l));
+    assertThat(ListUtils.itemAt(l, 1), equalTo("I'm the new guy!"));
+  }
+
+  @Test
+  public void _25_insertAfterMiddleItem()
+  {
+    Node<String> n = new Node<>();
+    n.item = "I'm the new guy!";
+    ListUtils.insertAfter(ListUtils.nodeAt(l,1), n);
+    assertEquals(5, ListUtils.size(l));
+    assertThat(ListUtils.itemAt(l, 2), equalTo("I'm the new guy!"));
+  }
+
+  @Test
+  public void _25_insertAfterLast()
+  {
+    Node<String> n = new Node<>();
+    n.item = "I'm the new guy!";
+    ListUtils.insertAfter(ListUtils.lastNode(l), n);
+    assertEquals(5, ListUtils.size(l));
+    assertThat(ListUtils.lastItem(l), equalTo("I'm the new guy!"));
+  }
+
 }

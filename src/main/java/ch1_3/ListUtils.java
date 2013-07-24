@@ -33,7 +33,7 @@ public class ListUtils
 
   public static <I> void removeAfter(Node<I> node)
   {
-    if (node.next == null)
+    if (node == null || node.next == null)
       return;
 
     node.next = node.next.next;
@@ -47,22 +47,58 @@ public class ListUtils
     return count;
   }
 
+  /*
+     1.3.24 Write a method removeAfter() that takes a linked-list Node as argument and
+     removes the node following the given one (and does nothing if the argument or the next
+     field in the argument node is null).
+  */
   public static <I> void insertAfter(Node<I> listMember, Node<I> newNode)
   {
+    if (listMember == null || newNode == null)
+      return;
 
+    newNode.next = listMember.next;
+    listMember.next = newNode;
   }
   public static <I> Node<I> nodeFor(Node<I> list, I item)
-  {return null;}
+  {
+    for (Node<I> n = list; n != null; n = n.next)
+      if (n.item.equals(item))
+        return n;
+    return null;
+  }
 
   public static <I> Node<I> nodeAt(Node<I> list, int index)
-  {return null;}
+  {
+    Node<I> n;
+    int i;
+    for (i = 0, n = list; n != null && i < index; i++, n = n.next)
+      ;
+
+    return n;
+  }
 
   public static <I> I itemAt(Node<I> list, int index)
-  {return null;}
+  {
+    Node <I> n = nodeAt(list, index);
+    if (n == null)
+      return null;
+    return n.item;
+  }
 
   public static <I> I lastItem(Node<I> list)
-  {return null;}
+  {
+    Node <I> n = lastNode(list);
+    if (n == null)
+      return null;
+    return n.item;
+  }
 
   public static <I> Node<I> lastNode(Node<I> list)
-  {return null;}
+  {
+    Node<I> n = list;;
+    while (n != null && n.next != null)
+      n = n.next;
+    return n;
+  }
 }
