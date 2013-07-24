@@ -46,4 +46,23 @@ public class ListUtils
       ;
     return count;
   }
+
+  public static <I> void insertAfter(Node<I> listMember, Node<I> newNode)
+  {
+
+  }
+  public static <I> Node<I> nodeFor(Node<I> list, I item)
+  {return null;}
+
+  public static <I> Node<I> nodeAt(Node<I> list, int index)
+  {return null;}
+
+  public static <I> I itemAt(Node<I> list, int index)
+  {return null;}
+
+  public static <I> I lastItem(Node<I> list)
+  {return null;}
+
+  public static <I> Node<I> lastNode(Node<I> list)
+  {return null;}
 }
