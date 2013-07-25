@@ -347,7 +347,6 @@ public class ListUtilsTest {
     assertEquals(4, ListUtils.size(l));
   }
 
-  @Ignore
   @Test
   public void _26_removeAllMatchMultipleInMiddle()
   {
@@ -359,9 +358,7 @@ public class ListUtilsTest {
     ListUtils.append(list, 12);
     ListUtils.append(list, 23);
 
-    // ListUtils.print(list, "\nMultiple");
     list = ListUtils.removeAll(list, 12);
-    // ListUtils.print(list, "\nMultiple");
     assertEquals(3, ListUtils.size(list));
     assertEquals(false, ListUtils.find(list, 12));
   }

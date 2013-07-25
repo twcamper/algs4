@@ -113,15 +113,11 @@ public class ListUtils
 
    while (curr != null) {
      if (curr.item.equals(item)) {
-       curr = curr.next;
+       curr = curr.next; // advance node to be tested
        if (prev == null)
-         list = curr;
-       else if (curr == null)
-         prev.next = curr;
-       else {
-         System.out.printf("prev: %s -> %s; curr: %s -> %s\n", prev, prev.next, curr, curr.next);
-         prev.next = curr.next;
-       }
+         list = curr;    // first node matches: reset head
+       else if (prev.next != null)
+         prev.next = prev.next.next;  // bypass current
      } else {
        prev = curr;
        curr = curr.next;
