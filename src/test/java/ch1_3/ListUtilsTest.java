@@ -312,12 +312,14 @@ public class ListUtilsTest {
     assertThat(ListUtils.lastItem(l), equalTo("I'm the new guy!"));
   }
 
+  @Ignore
   @Test
   public void _26_removAllFromNullList()
   {
     ListUtils.removeAll(null, 0);
   }
 
+  @Ignore
   @Test
   public void _26_removeAllFromSingleItemList()
   {
@@ -327,6 +329,7 @@ public class ListUtilsTest {
     assertThat(ListUtils.removeAll(n, 123), equalTo(null));
   }
 
+  @Ignore
   @Test
   public void _26_removeAllNoMatchSingleItemList()
   {
@@ -339,6 +342,7 @@ public class ListUtilsTest {
     assertThat(n.item, equalTo("foo"));
   }
 
+  @Ignore
   @Test
   public void _26_removeAllNoMatchMultipleItemList()
   {
@@ -347,6 +351,7 @@ public class ListUtilsTest {
     assertEquals(4, ListUtils.size(l));
   }
 
+  @Ignore
   @Test
   public void _26_removeAllMatchMultipleInMiddle()
   {
@@ -362,6 +367,7 @@ public class ListUtilsTest {
     assertEquals(3, ListUtils.size(list));
   }
 
+  @Ignore
   @Test
   public void _26_removeAllMatchFirstAndLast()
   {
@@ -378,6 +384,7 @@ public class ListUtilsTest {
     assertThat(ListUtils.lastItem(list), equalTo(99.0));
   }
 
+  @Ignore
   @Test
   public void _26_removeAllMatchAll()
   {
