@@ -312,14 +312,12 @@ public class ListUtilsTest {
     assertThat(ListUtils.lastItem(l), equalTo("I'm the new guy!"));
   }
 
-  @Ignore
   @Test
   public void _26_removAllFromNullList()
   {
     ListUtils.removeAll(null, 0);
   }
 
-  @Ignore
   @Test
   public void _26_removeAllFromSingleItemList()
   {
@@ -329,7 +327,6 @@ public class ListUtilsTest {
     assertThat(ListUtils.removeAll(n, 123), equalTo(null));
   }
 
-  @Ignore
   @Test
   public void _26_removeAllNoMatchSingleItemList()
   {
@@ -342,7 +339,6 @@ public class ListUtilsTest {
     assertThat(n.item, equalTo("foo"));
   }
 
-  @Ignore
   @Test
   public void _26_removeAllNoMatchMultipleItemList()
   {
@@ -357,43 +353,44 @@ public class ListUtilsTest {
   {
     Node<Integer> list = new Node<>();
     list.item = 42;
-    ListUtils.insert(list, 12);
-    ListUtils.insert(list, 12);
-    ListUtils.insert(list, 13);
-    ListUtils.insert(list, 12);
-    ListUtils.insert(list, 23);
+    ListUtils.append(list, 12);
+    ListUtils.append(list, 12);
+    ListUtils.append(list, 13);
+    ListUtils.append(list, 12);
+    ListUtils.append(list, 23);
 
+    // ListUtils.print(list, "\nMultiple");
     list = ListUtils.removeAll(list, 12);
+    // ListUtils.print(list, "\nMultiple");
     assertEquals(3, ListUtils.size(list));
+    assertEquals(false, ListUtils.find(list, 12));
   }
 
-  @Ignore
   @Test
   public void _26_removeAllMatchFirstAndLast()
   {
     Node<Double> list = new Node<>();
     list.item = 12.3;
-    ListUtils.insert(list, 99.0);
-    ListUtils.insert(list, 24.2);
-    ListUtils.insert(list, 123099.34);
-    ListUtils.insert(list, 12.3);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 24.2);
+    ListUtils.append(list, 123099.34);
+    ListUtils.append(list, 12.3);
 
     list = ListUtils.removeAll(list, 12.3);
 
     assertEquals(3, ListUtils.size(list));
-    assertThat(ListUtils.lastItem(list), equalTo(99.0));
+    assertEquals(false, ListUtils.find(list, 12.3));
   }
 
-  @Ignore
   @Test
   public void _26_removeAllMatchAll()
   {
     Node<Double> list = new Node<>();
     list.item = 99.0;
-    ListUtils.insert(list, 99.0);
-    ListUtils.insert(list, 99.0);
-    ListUtils.insert(list, 99.0);
-    ListUtils.insert(list, 99.0);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 99.0);
 
     list = ListUtils.removeAll(list, 99.0);
 

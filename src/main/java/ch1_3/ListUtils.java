@@ -108,7 +108,37 @@ public class ListUtils
  */
  public static <I> Node<I> removeAll(Node<I> list, I item)
  {
+   Node<I> curr = list;
+   Node<I> prev = null;
 
-   return null;
+   while (curr != null) {
+     if (curr.item.equals(item)) {
+       curr = curr.next;
+       if (prev == null)
+         list = curr;
+       else if (curr == null)
+         prev.next = curr;
+       else {
+         System.out.printf("prev: %s -> %s; curr: %s -> %s\n", prev, prev.next, curr, curr.next);
+         prev.next = curr.next;
+       }
+     } else {
+       prev = curr;
+       curr = curr.next;
+     }
+   }
+   return list;
+ }
+
+ public static <I> void print(Node<I> n, String message)
+ {
+    if (n == null) {
+      System.out.println();
+      return;
+    }
+    if (message != null)
+      System.out.println(message);
+    System.out.printf("%s\t", n);
+    print(n.next, null);
  }
 }
