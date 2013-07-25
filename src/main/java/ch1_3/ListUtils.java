@@ -101,4 +101,14 @@ public class ListUtils
       n = n.next;
     return n;
   }
+
+  /*
+     1.3.26 Write a method remove() that takes a linked list and a string key as arguments
+     and removes all of the nodes in the list that have key as its item field.
+ */
+ public static <I> Node<I> removeAll(Node<I> list, I item)
+ {
+
+   return null;
+ }
 }

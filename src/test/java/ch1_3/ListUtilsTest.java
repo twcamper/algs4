@@ -312,4 +312,85 @@ public class ListUtilsTest {
     assertThat(ListUtils.lastItem(l), equalTo("I'm the new guy!"));
   }
 
+  @Test
+  public void _26_removAllFromNullList()
+  {
+    ListUtils.removeAll(null, 0);
+  }
+
+  @Test
+  public void _26_removeAllFromSingleItemList()
+  {
+    Node<Integer> n = new Node<>();
+    n.item = 123;
+
+    assertThat(ListUtils.removeAll(n, 123), equalTo(null));
+  }
+
+  @Test
+  public void _26_removeAllNoMatchSingleItemList()
+  {
+    Node<String> n = new Node<>();
+    n.item = "foo";
+
+    n = ListUtils.removeAll(n, "bar");
+
+    assertEquals(1, ListUtils.size(n));
+    assertThat(n.item, equalTo("foo"));
+  }
+
+  @Test
+  public void _26_removeAllNoMatchMultipleItemList()
+  {
+    l = ListUtils.removeAll(l, "pudding");
+
+    assertEquals(4, ListUtils.size(l));
+  }
+
+  @Test
+  public void _26_removeAllMatchMultipleInMiddle()
+  {
+    Node<Integer> list = new Node<>();
+    list.item = 42;
+    ListUtils.insert(list, 12);
+    ListUtils.insert(list, 12);
+    ListUtils.insert(list, 13);
+    ListUtils.insert(list, 12);
+    ListUtils.insert(list, 23);
+
+    list = ListUtils.removeAll(list, 12);
+    assertEquals(3, ListUtils.size(list));
+  }
+
+  @Test
+  public void _26_removeAllMatchFirstAndLast()
+  {
+    Node<Double> list = new Node<>();
+    list.item = 12.3;
+    ListUtils.insert(list, 99.0);
+    ListUtils.insert(list, 24.2);
+    ListUtils.insert(list, 123099.34);
+    ListUtils.insert(list, 12.3);
+
+    list = ListUtils.removeAll(list, 12.3);
+
+    assertEquals(3, ListUtils.size(list));
+    assertThat(ListUtils.lastItem(list), equalTo(99.0));
+  }
+
+  @Test
+  public void _26_removeAllMatchAll()
+  {
+    Node<Double> list = new Node<>();
+    list.item = 99.0;
+    ListUtils.insert(list, 99.0);
+    ListUtils.insert(list, 99.0);
+    ListUtils.insert(list, 99.0);
+    ListUtils.insert(list, 99.0);
+
+    list = ListUtils.removeAll(list, 99.0);
+
+    assertEquals(0, ListUtils.size(list));
+  }
+
 }
