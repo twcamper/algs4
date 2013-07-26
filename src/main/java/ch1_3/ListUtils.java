@@ -108,22 +108,22 @@ public class ListUtils
  */
  public static <I> Node<I> removeAll(Node<I> list, I item)
  {
-   Node<I> curr = list;
-   Node<I> prev = null;
-
-   while (curr != null) {
-     if (curr.item.equals(item)) {
-       curr = curr.next; // advance node to be tested
-       if (prev == null)
-         list = curr;    // first node matches: reset head
-       else if (prev.next != null)
-         prev.next = prev.next.next;  // bypass current
-     } else {
-       prev = curr;
-       curr = curr.next;
-     }
+   Node<I> head = firstNonMatch(list, item);
+   Node<I> n = head;
+   while (n != null) {
+     n.next = firstNonMatch(n.next, item);
+     n = n.next;
    }
-   return list;
+
+   return head;
+ }
+
+ private static <I> Node<I> firstNonMatch(Node<I> list, I item)
+ {
+    Node<I> n = list;
+    while (n != null && n.item.equals(item))
+      n = n.next;
+    return n;
  }
 
  public static <I> void print(Node<I> n, String message)
