@@ -1,5 +1,6 @@
 package ch1_3;
 import util.Node;
+import edu.princeton.cs.introcs.*;
 /*
  * static methods to operate on a linked list
  */
@@ -126,6 +127,20 @@ public class ListUtils
     return n;
  }
 
+ private static Integer max(Node<Integer> node, Integer  max)
+ {
+   if (node == null)
+     return max;
+
+   if (node.item.compareTo(max) > 0)
+     max = node.item;
+   return max(node.next, max);
+ }
+ public static Integer max(Node<Integer> list)
+ {
+   return max(list, 0);
+ }
+
  public static <I> void print(Node<I> n, String message)
  {
     if (n == null) {
@@ -134,7 +149,24 @@ public class ListUtils
     }
     if (message != null)
       System.out.println(message);
-    System.out.printf("%s\t", n);
+    System.out.printf("%s\t", n.item);
     print(n.next, null);
+ }
+
+ private static void ex_1_3_28()
+ {
+   Node<Integer> list = new Node<>();
+   list.item = StdRandom.uniform(1024);
+
+   for (int i = 0; i < 20; i++)
+     append(list, StdRandom.uniform(65535));
+   print(list, "");
+
+   System.out.println(max(list));
+
+ }
+ public static void main(String[] args)
+ {
+   ex_1_3_28();
  }
 }
