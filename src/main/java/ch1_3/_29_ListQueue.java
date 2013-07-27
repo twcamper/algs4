@@ -66,16 +66,31 @@ public class _29_ListQueue<Item> implements Iterable<Item>
 
   private class CircularListIterator implements Iterator<Item>
   {
-    private Node n = last.next;
+    private Node n;
+    private Node first;
+
+    public CircularListIterator()
+    {
+      if (!isEmpty()) {
+        n     = last.next;
+        first = last.next;
+      }
+    }
     private boolean hasReturnedFirst = false;
     public    void remove()  {/*dummy to satisfy interface*/ }
     public boolean hasNext()
     {
-      return !(n.equals(last.next) && hasReturnedFirst);
+      if (first == null)
+        return false;
+
+      if (n.equals(first) && hasReturnedFirst)
+        return false;
+
+      return true;
     }
-    public    Item next()
+    public Item next()
     {
-      if (n.equals(last.next))
+      if (n.equals(first))
         hasReturnedFirst = true;
 
       Item data = n.item;

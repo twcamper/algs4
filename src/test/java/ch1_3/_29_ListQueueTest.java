@@ -1,6 +1,7 @@
 package ch1_3;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -234,7 +235,7 @@ public class _29_ListQueueTest {
   }
 
   @Test
-  public void traverseable()
+  public void iteratorMakesQueueTraversable()
   {
     String actual = "";
     String expected = "10 20 30 40 50 60 70 80 90 100 ";
@@ -254,5 +255,12 @@ public class _29_ListQueueTest {
       actual += i + " ";
 
     assertEquals(expected, actual);
+  }
+
+  @Test
+  public void iteratorDoesNothingWhenQueueEmpty()
+  {
+    for (Integer i : q)
+      assertTrue(false);
   }
 }
