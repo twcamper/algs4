@@ -56,11 +56,8 @@ public class _29_ListQueue<Item> implements Iterable<Item>
 
   public void print()
   {
-    Node n = last;
-    while (!n.next.equals(last)) {
-      System.out.printf("%s\t", n.next);
-      n = n.next;
-    }
+    for (Item i : this)
+      System.out.printf("%s\t", i);
     System.out.println();
   }
 
@@ -70,9 +67,17 @@ public class _29_ListQueue<Item> implements Iterable<Item>
   private class CircularListIterator implements Iterator<Item>
   {
     private Node n = last.next;
+    private boolean hasReturnedFirst = false;
     public    void remove()  {/*dummy to satisfy interface*/ }
-    public boolean hasNext() { return !n.equals(last);  }
-    public    Item next()    {
+    public boolean hasNext()
+    {
+      return !(n.equals(last.next) && hasReturnedFirst);
+    }
+    public    Item next()
+    {
+      if (n.equals(last.next))
+        hasReturnedFirst = true;
+
       Item data = n.item;
       n = n.next;
       return data;

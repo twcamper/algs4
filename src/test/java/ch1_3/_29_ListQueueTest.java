@@ -233,7 +233,6 @@ public class _29_ListQueueTest {
     assertThat(q.dequeue(), equalTo(4));
   }
 
-  @Ignore
   @Test
   public void traverseable()
   {
@@ -253,9 +252,6 @@ public class _29_ListQueueTest {
 
     for (Integer i : q)
       actual += i + " ";
-
-    System.out.println(expected);
-    System.out.println(actual);
 
     assertEquals(expected, actual);
   }
