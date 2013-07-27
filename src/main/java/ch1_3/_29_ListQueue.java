@@ -1,6 +1,12 @@
 package ch1_3;
 import java.util.Iterator;
 
+/*
+   1.3.29
+   Write a Queue implementation that uses a circular linked list, which is the same
+   as a linked list except that no links are null and the value of last.next is first whenever
+   the list is not empty. Keep only one Node instance variable (last).
+*/
 public class _29_ListQueue<Item> implements Iterable<Item>
 {
   private class Node
@@ -12,16 +18,13 @@ public class _29_ListQueue<Item> implements Iterable<Item>
   }
 
   private Node last;
+  private int size;
 
   public _29_ListQueue()   { last = null; }
   public Item front()      { return last.next.item; }
   public Item rear()       { return last.item; }
   public boolean isEmpty() { return last == null; }
-  public String toString()
-  {
-    String s = "";
-    return s;
-  }
+  public int size()        { return size; }
 
   public void enqueue(Item data)
   {
@@ -36,6 +39,7 @@ public class _29_ListQueue<Item> implements Iterable<Item>
       last.next    = newLast;    // old last points to new last
       last         = newLast;    // instance var references new 'last' node
     }
+    size++;
   }
 
   public Item dequeue()
@@ -51,13 +55,14 @@ public class _29_ListQueue<Item> implements Iterable<Item>
       last.next = last.next.next;
     }
 
+    size--;
     return i;
   }
 
-  public void print()
+  public void print(String separator)
   {
     for (Item i : this)
-      System.out.printf("%s\t", i);
+      System.out.printf("%s%s", i, separator);
     System.out.println();
   }
 
@@ -98,5 +103,19 @@ public class _29_ListQueue<Item> implements Iterable<Item>
       return data;
     }
 
+  }
+
+  public static void main(String[] args)
+  {
+    _29_ListQueue<String> q = new _29_ListQueue<>();
+
+    q.enqueue("One");
+    q.enqueue("flew");
+    q.enqueue("over");
+    q.enqueue("the");
+    q.enqueue("cuckoo's");
+    q.enqueue("nest!");
+
+    q.print(" ");
   }
 }

@@ -1,10 +1,16 @@
+package ch1_3;
 import util.*;
+import edu.princeton.cs.introcs.*;
+import edu.princeton.cs.algs4.*;
+
 public class _15_QueueClient
 {
 
   private static String fromLast(int n)
   {
-    Queue<String> q = new Queue<String>();
+    _14_ArrayQueue<String> q = new _14_ArrayQueue<String>(1000);
+    // _29_ListQueue<String> q = new _29_ListQueue<String>();
+    // Queue<String> q = new Queue<String>();
 
     while (!StdIn.isEmpty())
       q.enqueue(StdIn.readString());

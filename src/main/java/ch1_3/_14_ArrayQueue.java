@@ -4,7 +4,7 @@ public class _14_ArrayQueue<Item>
   private Item[] q;
   private int frontPosition;
   private int emptyPosition;
-  private int depth;
+  private int size;
   private int capacity;
 
   // Grows capacity only when depth is about to exceed capacity
@@ -32,14 +32,14 @@ public class _14_ArrayQueue<Item>
   {
     Item item = q[frontPosition];
     incrementFrontPosition();
-    depth--;
+    size--;
     return item;
   }
 
-  public int depth()       { return depth; }
+  public int size()       { return size; }
   public Item front()      { return q[frontPosition]; }
-  public Item rear()       { return q[frontPosition + depth - 1]; }
-  public boolean isEmpty() { return depth == 0; }
+  public Item rear()       { return q[frontPosition + size - 1]; }
+  public boolean isEmpty() { return size == 0; }
   public String toString()
   {
     String s = "";
@@ -72,8 +72,8 @@ public class _14_ArrayQueue<Item>
 
   private void incrementQueueSize()
   {
-    depth++;
-    if (depth >= capacity) {
+    size++;
+    if (size >= capacity) {
       capacity *= 2;
       resize(capacity);
     }
