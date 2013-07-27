@@ -14,21 +14,21 @@ public class _14_ArrayQueueTest {
   @Test
   public void enqueue() {
     _14_ArrayQueue<String> q = new _14_ArrayQueue<String>(5);
-    assertEquals(q.depth(), 0);
+    assertEquals(q.size(), 0);
     q.enqueue("foo");
     assertThat(q.front(), equalTo("foo"));
     assertThat(q.rear(), equalTo("foo"));
-    assertEquals(q.depth(), 1);
+    assertEquals(q.size(), 1);
 
     q.enqueue("bar");
     assertThat(q.front(), equalTo("foo"));
     assertThat(q.rear(), equalTo("bar"));
-    assertEquals(q.depth(), 2);
+    assertEquals(q.size(), 2);
 
     q.enqueue("calloo callay");
     assertThat(q.front(), equalTo("foo"));
     assertThat(q.rear(), equalTo("calloo callay"));
-    assertEquals(q.depth(), 3);
+    assertEquals(q.size(), 3);
 
   }
   @Test
@@ -47,7 +47,7 @@ public class _14_ArrayQueueTest {
     q.enqueue(6);
     assertThat(q.front(), equalTo(1));
     assertThat(q.rear(), equalTo(6));
-    assertEquals(q.depth(), 6);
+    assertEquals(q.size(), 6);
 
   }
   @Test
@@ -56,10 +56,10 @@ public class _14_ArrayQueueTest {
     _14_ArrayQueue<Integer> q = new _14_ArrayQueue<Integer>(5);
     q.enqueue(42);
     assertThat(q.front(), equalTo(42));
-    assertEquals(q.depth(), 1);
+    assertEquals(q.size(), 1);
 
     assertThat(q.dequeue(), equalTo(42));
-    assertEquals(q.depth(), 0);
+    assertEquals(q.size(), 0);
     assertEquals(q.isEmpty(), true);
 
     q.enqueue(12);
@@ -68,17 +68,17 @@ public class _14_ArrayQueueTest {
 
     assertThat(q.front(), equalTo(12));
     assertThat(q.rear(), equalTo(14));
-    assertEquals(q.depth(), 3);
+    assertEquals(q.size(), 3);
 
     assertThat(q.dequeue(), equalTo(12));
     assertThat(q.front(), equalTo(13));
     assertThat(q.rear(), equalTo(14));
-    assertEquals(q.depth(), 2);
+    assertEquals(q.size(), 2);
 
     assertThat(q.dequeue(), equalTo(13));
     assertThat(q.front(), equalTo(14));
     assertThat(q.rear(), equalTo(14));
-    assertEquals(q.depth(), 1);
+    assertEquals(q.size(), 1);
 
   }
   @Test
