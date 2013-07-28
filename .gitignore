@@ -2,3 +2,4 @@
 *~
 *.class
 target/classes/*.jar
+javac.out

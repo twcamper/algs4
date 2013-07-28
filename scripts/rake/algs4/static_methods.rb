@@ -21,7 +21,8 @@ module Algs4
     def build
       self::Changed.each do |out_dir, src_list|
         FileUtils.mkdir_p(out_dir, :verbose => false)
-        run_shell "javac -d #{out_dir} #{src_list.join(' ')}"
+        options = "-Xlint -Xstdout javac.out" if RUBY_PLATFORM =~ /linux/i
+        run_shell "javac #{options} -d #{out_dir} #{src_list.join(' ')}"
       end
     end
 
