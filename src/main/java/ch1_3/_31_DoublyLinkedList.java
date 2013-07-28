@@ -60,27 +60,34 @@ public class _31_DoublyLinkedList<Item>
 
   public Item removeTail()
   {
+    Item data = tail.data;
+    tail = tail.prev;
+    return data;
+  }
+
+  public Item remove(Item data)
+  {
+    DoubleNode n = find(data);
+
+    if (n == null)
+      return null;
+    if (n.prev == null)
+      return removeHead();
+    if (n.next == null)
+      return removeTail();
+
+    n.prev = n.next;
+
+    return n.data;
+  }
+
+  private DoubleNode find(Item data)
+  {
+    for (DoubleNode n = head; n != null; n = n.next)
+      if (n.data.equals(data))
+        return n;
     return null;
   }
-
-  public void remove(Item data)
-  {
-    DoubleNode n = head;
-    while (n != null)  {
-      if (n.data.equals(data)) {
-        if (n.prev == null) {
-          removeHead();
-        } else if (n.next == null) {
-          removeTail();
-        } else {
-
-        }
-        break;
-      }
-      n = n.next;
-    }
-  }
-
   public Item removeBefore(Item data)
   {
     return null;

@@ -92,7 +92,7 @@ public class _31_DoublyLinkedListTest {
   @Test
   public void removeEmpty()
   {
-    l.remove(3);
+    assertThat(l.remove(3), equalTo(null));
   }
 
   @Test
@@ -102,4 +102,76 @@ public class _31_DoublyLinkedListTest {
     l.remove(3);
     assertEquals(true, l.isEmpty());
   }
+
+  @Test
+  public void removeFromOneNotFound()
+  {
+    l.insert(0);
+    assertThat(l.remove(3), equalTo(null));
+  }
+
+  @Test
+  public void removeFromTwoAtHead()
+  {
+    l.insert(0);
+    l.insert(1);
+    assertThat(l.remove(1), equalTo(1));
+    assertThat(l.head(), equalTo(0));
+    assertThat(l.tail(), equalTo(0));
+  }
+
+  @Test
+  public void removeFromTwoAtTail()
+  {
+    l.insert(0);
+    l.insert(1);
+    assertThat(l.remove(0), equalTo(0));
+    assertThat(l.head(), equalTo(1));
+    assertThat(l.tail(), equalTo(1));
+  }
+
+  @Test
+  public void removeFromTwoNotFound()
+  {
+    l.insert(0);
+    l.insert(1);
+    assertThat(l.remove(3), equalTo(null));
+    assertThat(l.head(), equalTo(1));
+    assertThat(l.tail(), equalTo(0));
+  }
+
+  @Test
+  public void removeFromMiddle()
+  {
+    l.insert(0);
+    l.insert(1);
+    l.insert(2);
+
+    assertThat(l.remove(1), equalTo(1));
+    assertThat(l.head(), equalTo(2));
+    assertThat(l.tail(), equalTo(0));
+  }
+
+  @Test
+  public void removeFromThreeAtHead()
+  {
+    l.insert(0);
+    l.insert(1);
+    l.insert(2);
+    assertThat(l.remove(2), equalTo(2));
+    assertThat(l.head(), equalTo(1));
+    assertThat(l.tail(), equalTo(0));
+  }
+
+  @Test
+  public void removeFromThreeAtTail()
+  {
+    l.insert(0);
+    l.insert(1);
+    l.insert(2);
+    assertThat(l.remove(0), equalTo(0));
+    assertThat(l.head(), equalTo(2));
+    assertThat(l.tail(), equalTo(1));
+  }
+
 }
