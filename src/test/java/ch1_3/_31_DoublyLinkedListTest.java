@@ -41,4 +41,65 @@ public class _31_DoublyLinkedListTest {
     assertThat(l.head(), equalTo(l.tail()));
   }
 
+  @Test
+  public void appendToEmptyLeavesNonEmpty()
+  {
+    l.append(3);
+    assertEquals(false, l.isEmpty());
+  }
+
+  @Test
+  public void appendToEmptyHeadEqualsTail()
+  {
+    l.append(3);
+    assertThat(l.head(), equalTo(3));
+    assertThat(l.head(), equalTo(l.tail()));
+  }
+
+  @Test
+  public void insertToOneHeadChanges()
+  {
+    l.insert(0);
+    l.insert(1);
+    assertThat(l.head(), equalTo(1));
+  }
+
+  @Test
+  public void insertToOneTailRemains()
+  {
+    l.insert(0);
+    l.insert(1);
+    assertThat(l.tail(), equalTo(0));
+  }
+
+  @Test
+  public void appendToOneTailChanges()
+  {
+    l.insert(0);
+    assertThat(l.tail(), equalTo(0));
+    l.append(1);
+    assertThat(l.tail(), equalTo(1));
+  }
+
+  @Test
+  public void appendToOneHeadRemains()
+  {
+    l.insert(0);
+    l.append(1);
+    assertThat(l.head(), equalTo(0));
+  }
+
+  @Test
+  public void removeEmpty()
+  {
+    l.remove(3);
+  }
+
+  @Test
+  public void removeFromOne()
+  {
+    l.insert(3);
+    l.remove(3);
+    assertEquals(true, l.isEmpty());
+  }
 }

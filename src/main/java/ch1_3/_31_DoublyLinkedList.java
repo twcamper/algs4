@@ -21,16 +21,24 @@ public class _31_DoublyLinkedList<Item>
     if (head == null) {
       head = n;
       tail = n;
-      head.next = n;
+    } else {
+      n.next = head;
       head.prev = n;
-      tail.next = n;
-      tail.prev = n;
+      head = n;
     }
   }
 
   public void append(Item data)
   {
-
+    DoubleNode n = new DoubleNode(data);
+    if (tail == null) {
+      head = n;
+      tail = n;
+    } else {
+      tail.next = n;
+      n.prev = tail;
+      tail = n;
+    }
   }
 
   public Item head()
@@ -45,7 +53,9 @@ public class _31_DoublyLinkedList<Item>
 
   public Item removeHead()
   {
-    return null;
+    Item data = head.data;
+    head = head.next;
+    return data;
   }
 
   public Item removeTail()
@@ -55,7 +65,20 @@ public class _31_DoublyLinkedList<Item>
 
   public void remove(Item data)
   {
+    DoubleNode n = head;
+    while (n != null)  {
+      if (n.data.equals(data)) {
+        if (n.prev == null) {
+          removeHead();
+        } else if (n.next == null) {
+          removeTail();
+        } else {
 
+        }
+        break;
+      }
+      n = n.next;
+    }
   }
 
   public Item removeBefore(Item data)
