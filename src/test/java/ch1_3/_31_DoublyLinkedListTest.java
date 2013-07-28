@@ -104,6 +104,38 @@ public class _31_DoublyLinkedListTest {
   }
 
   @Test
+  public void removeHeadFromOneLeavesHeadNull()
+  {
+    l.insert(12);
+    l.removeHead();
+    assertThat(l.head(), equalTo(null));
+  }
+
+  @Test
+  public void removeHeadFromOneLeavesTailNull()
+  {
+    l.insert(12);
+    l.removeHead();
+    assertThat(l.tail(), equalTo(null));
+  }
+
+  @Test
+  public void removeTailFromOneLeavesHeadNull()
+  {
+    l.insert(12);
+    l.removeTail();
+    assertThat(l.head(), equalTo(null));
+  }
+
+  @Test
+  public void removeTailFromOneLeavesTailNull()
+  {
+    l.insert(12);
+    l.removeTail();
+    assertThat(l.tail(), equalTo(null));
+  }
+
+  @Test
   public void removeFromOneNotFound()
   {
     l.insert(0);
@@ -172,6 +204,151 @@ public class _31_DoublyLinkedListTest {
     assertThat(l.remove(0), equalTo(0));
     assertThat(l.head(), equalTo(2));
     assertThat(l.tail(), equalTo(1));
+  }
+
+  @Test
+  public void removeHeadClearsMany()
+  {
+    l.append(0);
+    l.append(1);
+    l.append(2);
+    l.append(3);
+    l.append(4);
+    l.append(5);
+
+    assertThat(l.removeHead(), equalTo(0));
+    assertThat(l.removeHead(), equalTo(1));
+    assertThat(l.removeHead(), equalTo(2));
+    assertThat(l.removeHead(), equalTo(3));
+    assertThat(l.removeHead(), equalTo(4));
+    assertThat(l.removeHead(), equalTo(5));
+    assertEquals(true, l.isEmpty());
+  }
+
+  @Test
+  public void removeTailClearsMany()
+  {
+    l.insert(0);
+    l.insert(1);
+    l.insert(2);
+    l.insert(3);
+    l.insert(4);
+    l.insert(5);
+
+    assertThat(l.removeTail(), equalTo(0));
+    assertThat(l.removeTail(), equalTo(1));
+    assertThat(l.removeTail(), equalTo(2));
+    assertThat(l.removeTail(), equalTo(3));
+    assertThat(l.removeTail(), equalTo(4));
+    assertThat(l.removeTail(), equalTo(5));
+    assertEquals(true, l.isEmpty());
+
+  }
+
+  @Test
+  public void removeBeforeEmpty()
+  {
+    assertThat(l.removeBefore(11), equalTo(null));
+  }
+
+  @Test
+  public void removeAfterEmpty()
+  {
+    assertThat(l.removeAfter(11), equalTo(null));
+  }
+
+  @Test
+  public void removeBeforeOneLeavesHeadAndTail()
+  {
+    l.insert(11);
+    l.removeBefore(11);
+    assertThat(l.head(), equalTo(11));
+    assertThat(l.tail(), equalTo(11));
+  }
+
+  @Test
+  public void removeAfterOneLeavesHeadAndTail()
+  {
+    l.insert(11);
+    l.removeAfter(11);
+    assertThat(l.head(), equalTo(11));
+    assertThat(l.tail(), equalTo(11));
+  }
+
+  @Test
+  public void removeBeforeRemovesHead()
+  {
+    l.insert(1);
+    l.insert(10);
+    assertThat(l.removeBefore(1), equalTo(10));
+    assertThat(l.head(), equalTo(1));
+  }
+
+  @Test
+  public void removeBeforeNothingFound()
+  {
+    l.insert(1);
+    l.insert(10);
+    l.insert(11);
+    l.insert(12);
+    assertThat(l.removeBefore(9), equalTo(null));
+  }
+
+  @Test
+  public void removeBeforeRemovesMiddle()
+  {
+    l.insert(1);
+    l.insert(10);
+    l.insert(11);
+    l.insert(12);
+    assertThat(l.removeBefore(10), equalTo(11));
+  }
+
+  @Test
+  public void removeAfterFindsTail()
+  {
+    l.insert(0);
+    l.insert(1);
+    assertThat(l.removeAfter(0), equalTo(null));
+  }
+
+  @Test
+  public void removeAfterFindsHead()
+  {
+    l.insert(0);
+    l.insert(1);
+    l.insert(30);
+    assertThat(l.removeAfter(30), equalTo(1));
+    assertThat(l.head(), equalTo(30));
+  }
+
+  @Test
+  public void removeAfterRemovesTail()
+  {
+    l.insert(0);
+    l.insert(1);
+    l.insert(31);
+    assertThat(l.removeAfter(1), equalTo(0));
+    assertThat(l.tail(), equalTo(1));
+  }
+
+  @Test
+  public void removeAfterNothingFound()
+  {
+    l.insert(0);
+    l.insert(1);
+    l.insert(31);
+    assertThat(l.removeAfter(9), equalTo(null));
+  }
+
+  @Test
+  public void removeAfterRemovesMiddle()
+  {
+    l.insert(1);
+    l.insert(10);
+    l.insert(11);
+    l.insert(12);
+    assertThat(l.removeAfter(11), equalTo(10));
   }
 
 }

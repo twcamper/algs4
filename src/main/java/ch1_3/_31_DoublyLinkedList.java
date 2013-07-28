@@ -43,17 +43,23 @@ public class _31_DoublyLinkedList<Item>
 
   public Item head()
   {
+    if (head == null)
+      return null;
     return head.data;
   }
 
   public Item tail()
   {
+    if (tail == null)
+      return null;
     return tail.data;
   }
 
   public Item removeHead()
   {
     Item data = head.data;
+    if (head == tail)
+      tail = null;
     head = head.next;
     return data;
   }
@@ -61,6 +67,8 @@ public class _31_DoublyLinkedList<Item>
   public Item removeTail()
   {
     Item data = tail.data;
+    if (tail == head)
+      head = null;
     tail = tail.prev;
     return data;
   }
@@ -90,12 +98,32 @@ public class _31_DoublyLinkedList<Item>
   }
   public Item removeBefore(Item data)
   {
-    return null;
+    DoubleNode n = find(data);
+
+    if (n == null || n.prev == null)
+      return null;
+
+    if (n.prev == head)
+      return removeHead();
+
+    Item i = n.prev.data;
+    n.prev = n.prev.prev;
+    return i;
   }
 
   public Item removeAfter(Item data)
   {
-    return null;
+    DoubleNode n = find(data);
+
+    if (n == null || n.next == null)
+      return null;
+
+    if (n.next == tail)
+      return removeTail();
+
+    Item i = n.next.data;
+    n.next = n.next.next;
+    return i;
   }
 
   public boolean isEmpty()
