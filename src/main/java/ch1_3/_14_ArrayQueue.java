@@ -1,8 +1,8 @@
 package ch1_3;
 public class _14_ArrayQueue<Item>
 {
-  private Item[] q;
-  private int frontPosition;
+  protected Item[] q;
+  protected int frontPosition;
   private int emptyPosition;
   private int size;
   private int capacity;
