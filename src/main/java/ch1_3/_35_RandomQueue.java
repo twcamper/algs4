@@ -1,7 +1,9 @@
 package ch1_3;
 import java.util.Random;
+import java.util.Iterator;
 
 public class _35_RandomQueue<Item> extends _14_ArrayQueue<Item>
+                                   implements Iterable<Item>
 {
   private Integer sampleIndex;
   private Random random;
@@ -41,5 +43,28 @@ public class _35_RandomQueue<Item> extends _14_ArrayQueue<Item>
   private Integer randomIndex()
   {
     return frontPosition + random.nextInt(size());
+  }
+
+  public Iterator<Item> iterator()
+  { return new RandomIterator(size()); }
+
+  private class RandomIterator implements Iterator<Item>
+  {
+    private _35_RandomQueue<Item> copy;
+    public RandomIterator(int size)
+    {
+      copy = new _35_RandomQueue(size);
+      // TODO:  copy the data
+    }
+    public void remove() {}
+    public boolean hasNext()
+    {
+      return !copy.isEmpty();
+    }
+    public Item next()
+    {
+      return copy.dequeue();
+    }
+
   }
 }
