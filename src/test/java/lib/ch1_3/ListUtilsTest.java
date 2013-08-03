@@ -19,8 +19,7 @@ public class ListUtilsTest {
   @Before
   public void setUp()
   {
-    l = new Node<String>();
-    l.item = "tail";
+    l = new Node<String>("tail");
     l = ListUtils.insert(l, "third");
     l = ListUtils.insert(l, "second");
     l = ListUtils.insert(l, "head");
@@ -60,13 +59,10 @@ public class ListUtilsTest {
   @Test
   public void _24_removeAfterRemovesLast()
   {
-    Node<Integer> head = new Node<Integer>();
-    Node<Integer> middle = new Node<Integer>();
-    Node<Integer> tail = new Node<Integer>();
+    Node<Integer> head = new Node<Integer>(10);
+    Node<Integer> middle = new Node<Integer>(20);
+    Node<Integer> tail = new Node<Integer>(30);
 
-    head.item = 10;
-    middle.item = 20;
-    tail.item = 30;
     head.next = middle;
     middle.next = tail;
 
@@ -77,15 +73,11 @@ public class ListUtilsTest {
   @Test
   public void _24_removeAfterMiddle()
   {
-    Node<Integer> head = new Node<>();
-    Node<Integer> middle = new Node<>();
-    Node<Integer> third = new Node<>();
-    Node<Integer> tail = new Node<>();
+    Node<Integer> head = new Node<>(10);
+    Node<Integer> middle = new Node<>(20);
+    Node<Integer> third = new Node<>(25);
+    Node<Integer> tail = new Node<>(30);
 
-    head.item = 10;
-    middle.item = 20;
-    third.item = 25;
-    tail.item = 30;
     head.next = middle;
     middle.next = third;
     third.next = tail;
@@ -97,12 +89,10 @@ public class ListUtilsTest {
   @Test
   public void _24_removeAfterLast()
   {
-    Node<Integer> head = new Node<Integer>();
-    Node<Integer> tail = new Node<Integer>();
+    Node<Integer> head = new Node<Integer>(1);
+    Node<Integer> tail = new Node<Integer>(2);
 
-    head.item = 1;
     head.next = tail;
-    tail.item = 2;
 
     ListUtils.removeAfter(tail);
     assertEquals(2, ListUtils.size(head));
@@ -223,8 +213,7 @@ public class ListUtilsTest {
   @Test
   public void lastItemOfSingleItemList()
   {
-    Node<Double> n = new Node<>();
-    n.item = 25.5;
+    Node<Double> n = new Node<>(25.5);
     assertThat(ListUtils.lastItem(n), equalTo(25.5));
   }
 
@@ -244,8 +233,7 @@ public class ListUtilsTest {
   @Test
   public void lastNodeOfSingleItemList()
   {
-    Node<Double> n = new Node<>();
-    n.item = 25.5;
+    Node<Double> n = new Node<>(25.5);
     assertThat(ListUtils.lastNode(n).item, equalTo(25.5));
   }
 
@@ -258,7 +246,7 @@ public class ListUtilsTest {
   @Test
   public void _25_insertAfterNullList()
   {
-    Node<Integer> n = new Node<>();
+    Node<Integer> n = new Node<>(0);
     ListUtils.insertAfter(null, n);
   }
 
@@ -272,10 +260,8 @@ public class ListUtilsTest {
   @Test
   public void _25_insertAfterSingleItemList()
   {
-    Node<Integer> head = new Node<>();
-    Node<Integer> n = new Node<>();
-    head.item = 42;
-    n.item = 43;
+    Node<Integer> head = new Node<>(42);
+    Node<Integer> n = new Node<>(43);
 
     ListUtils.insertAfter(head, n);
     assertEquals(2, ListUtils.size(head));
@@ -285,8 +271,7 @@ public class ListUtilsTest {
   @Test
   public void _25_insertAfterFirstOfMultiItemList()
   {
-    Node<String> n = new Node<>();
-    n.item = "I'm the new guy!";
+    Node<String> n = new Node<>("I'm the new guy!");
     ListUtils.insertAfter(l, n);
     assertEquals(5, ListUtils.size(l));
     assertThat(ListUtils.itemAt(l, 1), equalTo("I'm the new guy!"));
@@ -295,8 +280,7 @@ public class ListUtilsTest {
   @Test
   public void _25_insertAfterMiddleItem()
   {
-    Node<String> n = new Node<>();
-    n.item = "I'm the new guy!";
+    Node<String> n = new Node<>("I'm the new guy!");
     ListUtils.insertAfter(ListUtils.nodeAt(l,1), n);
     assertEquals(5, ListUtils.size(l));
     assertThat(ListUtils.itemAt(l, 2), equalTo("I'm the new guy!"));
@@ -305,8 +289,7 @@ public class ListUtilsTest {
   @Test
   public void _25_insertAfterLast()
   {
-    Node<String> n = new Node<>();
-    n.item = "I'm the new guy!";
+    Node<String> n = new Node<>("I'm the new guy!");
     ListUtils.insertAfter(ListUtils.lastNode(l), n);
     assertEquals(5, ListUtils.size(l));
     assertThat(ListUtils.lastItem(l), equalTo("I'm the new guy!"));
@@ -321,8 +304,7 @@ public class ListUtilsTest {
   @Test
   public void _26_removeAllFromSingleItemList()
   {
-    Node<Integer> n = new Node<>();
-    n.item = 123;
+    Node<Integer> n = new Node<>(123);
 
     assertThat(ListUtils.removeAll(n, 123), equalTo(null));
   }
@@ -330,8 +312,7 @@ public class ListUtilsTest {
   @Test
   public void _26_removeAllNoMatchSingleItemList()
   {
-    Node<String> n = new Node<>();
-    n.item = "foo";
+    Node<String> n = new Node<>("foo");
 
     n = ListUtils.removeAll(n, "bar");
 
@@ -350,8 +331,7 @@ public class ListUtilsTest {
   @Test
   public void _26_removeAllMatchMultipleInMiddle()
   {
-    Node<Integer> list = new Node<>();
-    list.item = 42;
+    Node<Integer> list = new Node<>(42);
     ListUtils.append(list, 12);
     ListUtils.append(list, 12);
     ListUtils.append(list, 13);
@@ -366,8 +346,7 @@ public class ListUtilsTest {
   @Test
   public void _26_removeAllMatchFirstAndLast()
   {
-    Node<Double> list = new Node<>();
-    list.item = 12.3;
+    Node<Double> list = new Node<>(12.3);
     ListUtils.append(list, 99.0);
     ListUtils.append(list, 24.2);
     ListUtils.append(list, 123099.34);
@@ -382,8 +361,7 @@ public class ListUtilsTest {
   @Test
   public void _26_removeAllMatchAll()
   {
-    Node<Double> list = new Node<>();
-    list.item = 99.0;
+    Node<Double> list = new Node<>(99.0);
     ListUtils.append(list, 99.0);
     ListUtils.append(list, 99.0);
     ListUtils.append(list, 99.0);
@@ -394,4 +372,62 @@ public class ListUtilsTest {
     assertEquals(0, ListUtils.size(list));
   }
 
+  @Test
+  public void removeFromEmpty()
+  {
+    assertThat(ListUtils.remove(null, "Foo"), equalTo(null));
+  }
+
+  @Test
+  public void removeNotFound()
+  {
+    Node<String> list = new Node<>("Foo");
+    list = ListUtils.remove(list, "Bar");
+    assertThat(list.item, equalTo("Foo"));
+    assertEquals(1, ListUtils.size(list));
+  }
+
+  @Test
+  public void removeFromOne()
+  {
+    Node<String> list = new Node<>("Foo");
+    list = ListUtils.remove(list, "Foo");
+    assertEquals(0, ListUtils.size(list));
+  }
+
+  @Test
+  public void removeFromBeginning()
+  {
+    Node<Double> list = new Node<>(13.901);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 99.0);
+    list = ListUtils.remove(list, 13.901);
+    assertThat(list.item, equalTo(99.0));
+    assertEquals(3, ListUtils.size(list));
+  }
+
+  @Test
+  public void removeFromEnd()
+  {
+    Node<Double> list = new Node<>(13.901);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 99.5);
+    list = ListUtils.remove(list, 99.5);
+    assertThat(ListUtils.lastItem(list), equalTo(99.0));
+    assertEquals(3, ListUtils.size(list));
+  }
+
+  @Test
+  public void removeFromMiddle()
+  {
+    Node<Double> list = new Node<>(13.901);
+    ListUtils.append(list, 99.0);
+    ListUtils.append(list, 19.0);
+    ListUtils.append(list, 99.5);
+    list = ListUtils.remove(list, 19.0);
+    assertEquals(false, ListUtils.find(list, 19.0));
+    assertEquals(3, ListUtils.size(list));
+  }
 }

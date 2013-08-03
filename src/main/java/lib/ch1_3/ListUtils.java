@@ -12,13 +12,11 @@ public class ListUtils
     Node<I> n = list;
     while (n.next != null)
       n = n.next;
-    n.next = new Node<I>();
-    n.next.item = i;
+    n.next = new Node<I>(i);
   }
   public static <I> Node<I> insert(Node<I> list, I i)
   {
-    Node<I> newHead = new Node<I>();
-    newHead.item = i;
+    Node<I> newHead = new Node<I>(i);
     newHead.next = list;
     return newHead;
   }
@@ -103,6 +101,25 @@ public class ListUtils
     return n;
   }
 
+  public static <I> Node<I> remove(Node<I> list, I item)
+  {
+    if (list == null)
+      return null;
+
+    Node current = list;
+    Node previous = null;
+    while (current != null && !current.item.equals(item)) {
+      previous = current;
+      current = current.next;
+    }
+
+    if (previous == null)
+      list = list.next;
+    else if (current != null)
+      previous.next = current.next;
+
+    return list;
+  }
   /*
      1.3.26 Write a method remove() that takes a linked list and a string key as arguments
      and removes all of the nodes in the list that have key as its item field.
@@ -155,8 +172,7 @@ public class ListUtils
 
  private static void ex_1_3_28()
  {
-   Node<Integer> list = new Node<>();
-   list.item = StdRandom.uniform(1024);
+   Node<Integer> list = new Node<>(StdRandom.uniform(1024));
 
    for (int i = 0; i < 20; i++)
      append(list, StdRandom.uniform(65535));
