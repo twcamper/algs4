@@ -30,6 +30,9 @@ public class _14_ArrayQueue<Item>
 
   public Item dequeue()
   {
+    if (isEmpty())
+      return null;
+
     Item item = q[frontPosition];
     incrementFrontPosition();
     size--;

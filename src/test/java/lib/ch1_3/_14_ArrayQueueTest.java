@@ -50,6 +50,14 @@ public class _14_ArrayQueueTest {
     assertEquals(q.size(), 6);
 
   }
+
+  @Test
+  public void dequeueEmptyHasNoEffect()
+  {
+    _14_ArrayQueue<Integer> q = new _14_ArrayQueue<Integer>(5);
+    assertThat(q.dequeue(), equalTo(null));
+    assertEquals(q.size(), 0);
+  }
   @Test
   public void dequeue()
   {
