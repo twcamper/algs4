@@ -2,8 +2,8 @@ package ch1_3;
 import java.util.Iterator;
 public class _14_ArrayQueue<Item> implements Iterable<Item>
 {
-  protected Item[] q;
-  protected int frontPosition;
+  private Item[] q;
+  private int frontPosition;
   private int emptyPosition;
   private int size;
   private int capacity;
