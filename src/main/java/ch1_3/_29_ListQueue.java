@@ -21,6 +21,20 @@ public class _29_ListQueue<Item> implements Iterable<Item>
   private int size;
 
   public _29_ListQueue()   { last = null; }
+
+  /*
+     1.3.41 Copy a queue. Create a new constructor so that
+     Queue<Item> r = new Queue<Item>(q);
+     makes r a reference to a new and independent copy of the queue q. You should be able
+     to enqueue and dequeue from either q or r without influencing the other. Hint : Delete
+     all of the elements from q and add these elements to both q and r.
+     */
+  public _29_ListQueue(_29_ListQueue<Item> other)
+  {
+    last = null;
+    for (Item i: other)
+      this.enqueue(i);
+  }
   public Item front()      { return last.next.item; }
   public Item rear()       { return last.item; }
   public boolean isEmpty() { return last == null; }

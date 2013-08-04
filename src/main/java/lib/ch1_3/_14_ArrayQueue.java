@@ -1,5 +1,6 @@
 package ch1_3;
-public class _14_ArrayQueue<Item>
+import java.util.Iterator;
+public class _14_ArrayQueue<Item> implements Iterable<Item>
 {
   protected Item[] q;
   protected int frontPosition;
@@ -19,6 +20,28 @@ public class _14_ArrayQueue<Item>
     emptyPosition = 0;
     capacity      = cap;
     q =  (Item[]) new Object[capacity];
+  }
+
+  /*
+     1.3.41 Copy a queue. Create a new constructor so that
+     Queue<Item> r = new Queue<Item>(q);
+     makes r a reference to a new and independent copy of the queue q. You should be able
+     to enqueue and dequeue from either q or r without influencing the other. Hint : Delete
+     all of the elements from q and add these elements to both q and r.
+  */
+  public _14_ArrayQueue(_14_ArrayQueue<Item> other)
+  {
+    frontPosition = 0;
+    emptyPosition = 0;
+    if (other.isEmpty())
+      capacity = 2;
+    else
+      capacity = other.size() * 2;
+
+    q = (Item[]) new Object[capacity];
+
+    for (Item i : other)
+      this.enqueue(i);
   }
 
   public void enqueue(Item item)
@@ -59,18 +82,21 @@ public class _14_ArrayQueue<Item>
     q = temp;
   }
 
+  private int nextIndex(int current)
+  {
+    if (current == capacity - 1)
+      return 0;
+    return current + 1;
+  }
+
   private void incrementEmptyPosition()
   {
-    emptyPosition++;
-    if (emptyPosition >= capacity)
-      emptyPosition = 0;
+    emptyPosition = nextIndex(emptyPosition);
   }
 
   private void incrementFrontPosition()
   {
-    frontPosition++;
-    if (frontPosition >= capacity)
-      frontPosition = 0;
+    frontPosition = nextIndex(frontPosition);
   }
 
   private void incrementQueueSize()
@@ -79,6 +105,36 @@ public class _14_ArrayQueue<Item>
     if (size >= capacity) {
       capacity *= 2;
       resize(capacity);
+    }
+  }
+
+  public Iterator<Item> iterator()
+  { return new ArrayQueueIterator(); }
+
+  private class ArrayQueueIterator implements Iterator<Item>
+  {
+    private int i;
+    public ArrayQueueIterator()
+    {
+      i = frontPosition;
+    }
+    public void remove()     {}
+    public boolean hasNext()
+    {
+      if (isEmpty())
+        return false;
+
+      // if we've wrapped around, without increasing capacity
+      if (emptyPosition == 0)
+        return i < capacity - 1;
+
+      return i < emptyPosition;
+    }
+    public Item next()
+    {
+      Item data = q[i];
+      i = nextIndex(i);
+      return data;
     }
   }
 }
